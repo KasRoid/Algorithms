@@ -4,18 +4,41 @@
 def sublist_max(profits, start, end):
     if start == end:
         return profits[start]
-    p = len(profits) // 2
 
-    left_max = 0
-    right_max = 0
-    mid_max = 0
+    p = (start + end) // 2
+
+    left_max = sublist_max(profits, start, p)
+    right_max = sublist_max(profits, p + 1, end)
+    mid_max = max_crossing_sum(profits, start, end)
     return max(left_max, right_max, mid_max)
 
 
 def max_crossing_sum(profits, start, end):
-    p = len(profits) // 2
-    if p == start | p == end:
-        return
+    p = (start + end) // 2
+
+    left_profits = profits[:p]
+    right_profits = profits[p:]
+    left_sum = 0
+    left_max = 0
+    right_sum = 0
+    right_max = 0
+
+    for profit in reversed(left_profits):
+        left_sum += profit
+        if left_sum > left_max:
+            left_max = left_sum
+
+    for profit in right_profits:
+        right_sum += profit
+        if right_sum > right_max:
+            right_max = right_sum
+
+    if left_max > 0 & right_max < 0:
+        return left_max
+    elif left_max < 0 & right_max > 0:
+        return right_max
+    else:
+        return left_max + right_max
 
 
 # 테스트
