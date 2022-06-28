@@ -1,4 +1,4 @@
 # Algorithms
 
-- [codeit](https://www.codeit.kr)
+- [Codeit](https://www.codeit.kr)
 - [Programmers](https://programmers.co.kr)
