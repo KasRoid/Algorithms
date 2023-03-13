@@ -1,5 +1,5 @@
 import java.util.*;
-import java.lang.*;
+// import java.lang.*;
 
 class Polynomial {
 	private Term[] termArray;
@@ -34,12 +34,12 @@ class Polynomial {
 		Polynomial c = new Polynomial(128);
 		int aPos = 0, bPos = 0;
 		while((aPos < terms) && (bPos < b.terms))
-			if(termArray[aPos].exp == b.termArray[bPos].exp){
-				double t=termArray[aPos].coef+b.termArray[bPos].coef;
+			if(termArray[aPos].exp == b.termArray[bPos].exp) {
+				double t = termArray[aPos].coef + b.termArray[bPos].coef;
 				if (t != 0.0) c.NewTerm(t, termArray[aPos].exp);
 				aPos++; bPos++;
 			}
-			else if(termArray[aPos].exp < b.termArray[bPos].exp){
+			else if(termArray[aPos].exp < b.termArray[bPos].exp) {
 				c.NewTerm(b.termArray[bPos].coef, b.termArray[bPos].exp);
 				bPos++;
 			}
@@ -59,13 +59,27 @@ class Polynomial {
 	public Polynomial Subtract(Polynomial b) {
 		// Return the sum of the polynomials this and b
 		Polynomial c = new Polynomial(128);
+		int aPos = 0, bPos = 0;
+		while((aPos < terms) && (bPos < b.terms))
+			if(termArray[aPos].exp == b.termArray[bPos].exp) {
+				double t = termArray[aPos].coef - b.termArray[bPos].coef;
+				if (t != 0.0) c.NewTerm(t, termArray[aPos].exp);
+				aPos++; bPos++;
+			}
+			else if(termArray[aPos].exp < b.termArray[bPos].exp) {
+				c.NewTerm(-b.termArray[bPos].coef, b.termArray[bPos].exp);
+				bPos++;
+			}
+			else {
+				c.NewTerm(termArray[aPos].coef, termArray[aPos].exp);
+				aPos++;
+			}
 
-
-
-
-
-
-
+		// add in remaining terms of *this
+		for( ; aPos < terms; aPos++)
+			c.NewTerm(termArray[aPos].coef, termArray[aPos].exp);
+		for( ; bPos < b.terms; bPos++)
+			c.NewTerm(-b.termArray[bPos].coef, b.termArray[bPos].exp);
 		return c;
 	}		
 
@@ -73,16 +87,11 @@ class Polynomial {
 	double Evaluate(double f) {
 		double eval = 0.0;
 
-
-
-
-
-
-
-
+		for(int i = 0; i < terms; i++) {
+			double coef = termArray[i].coef;
+			int exp = termArray[i].exp;
+			eval += Math.pow(f, exp) * coef;
+		}
 		return eval;
 	}
-
 }
-
-
