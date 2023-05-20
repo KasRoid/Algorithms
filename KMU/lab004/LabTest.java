@@ -18,8 +18,6 @@ class Item implements KeyValue {
 	public int GetValue() { return val;}
 };
 
-
-
 @SuppressWarnings("unchecked")
 class LabTest {
 	static Scanner in;
@@ -55,4 +53,3 @@ class LabTest {
 		}
 	}
 }
-
